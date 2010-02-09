@@ -1,13 +1,19 @@
 ActsAsStripper
 ==============
 
-Introduction goes here.
+The white spaces in your form fields can be annoying at times. This Rails plugin is created to ease your pain.
 
 
 Example
 =======
 
-Example goes here.
+If you have a user model, simply add acts_as_stripper, and all the white spaces in your form fields will be stripped away!
+
+    class User < ActiveRecord::Base
+      acts_as_stripper
+    end
 
 
-Copyright (c) 2010 [name of plugin creator], released under the MIT license
+Copyright (c) 2010 by Jerry Tian, released under the MIT license
+http://travid.info
+http://twitter.com/tianjerry
