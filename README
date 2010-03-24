@@ -10,7 +10,15 @@ Example
 If you have a user model, simply add acts_as_stripper, and all the white spaces in your form fields will be stripped away!
 
     class User < ActiveRecord::Base
-      acts_as_stripper
+      acts_as_stripper 
+    end
+
+    class User < ActiveRecord::Base
+      acts_as_stripper :include => [:first_name, :last_name]
+    end
+
+    class User < ActiveRecord::Base
+      acts_as_stripper :exclude => :some_other_thing
     end
 
 Say that someone enters '  Vancouver, Canada   ' as a location, this plugin will strip away the white leading and trailing white spaces and store simply 'Vancouver, Canada' for the location field.

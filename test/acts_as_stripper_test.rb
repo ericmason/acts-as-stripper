@@ -21,6 +21,14 @@ class DummyClass < ActiveRecord::Base
   column :name,  :string
 end
 
+class NonNilDummy < ActiveRecord::Base
+  acts_as_stripper(:exclude => :login, :convert_empty_string_to_nil => false)
+  
+  column :id,    :integer
+  column :login, :string
+  column :name,  :string
+end
+
 class ActsAsStripperTest < ActiveSupport::TestCase
   # Replace this with your real tests.
   test "the truth" do
@@ -39,5 +47,19 @@ class ActsAsStripperTest < ActiveSupport::TestCase
     d.login = "asdf "
     d.valid?
     assert_equal "asdf ", d.login
+  end
+  
+  test "converts empty strings to nil" do
+    d = DummyClass.new
+    d.name = ""
+    d.valid?
+    assert_equal nil, d.name
+  end
+  
+  test "doesn't convert empty strings to nil when not supposed to" do
+    d = NonNilDummy.new
+    d.name = ""
+    d.valid?
+    assert_equal "", d.name
   end
 end
