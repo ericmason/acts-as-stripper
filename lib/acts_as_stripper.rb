@@ -8,18 +8,22 @@ module TrAvid
       end
 
       module ClassMethods
-        def acts_as_stripper          
-          include TrAvid::Acts::Stripper::InstanceMethods
-          before_validation_on_update :strip_white_spaces
+        def acts_as_stripper(opts={})
+          opts = {
+            :exclude => [],
+            :include => []
+          }.merge(opts)
+          include_keys = opts[:include].to_a.collect {|x| x.to_s}
+          exclude_keys = opts[:exclude].to_a.collect {|x| x.to_s}
+
+          before_validation do |obj|
+            include_keys = obj.attribute_names if include_keys.empty?
+            strip_attributes = include_keys - exclude_keys
+            strip_attributes.each {|a| obj[a].strip! if obj[a].respond_to?(:strip!) }
+          end
         end
       end
             
-      # This module contains instance methods
-      module InstanceMethods
-        def strip_white_spaces
-          attributes.each_key {|a| self[a].strip! if self[a].respond_to?(:strip!) }
-        end
-      end
     end
   end
 end
