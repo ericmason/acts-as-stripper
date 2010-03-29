@@ -14,8 +14,8 @@ module TrAvid
             :include => [],
             :convert_empty_string_to_nil => true
           }.merge(opts)
-          include_keys = opts[:include].to_a.collect {|x| x.to_s}
-          exclude_keys = opts[:exclude].to_a.collect {|x| x.to_s}
+          include_keys = [*opts[:include]].collect {|x| x.to_s}
+          exclude_keys = [*opts[:exclude]].collect {|x| x.to_s}
           convert_empty_string_to_nil = opts[:convert_empty_string_to_nil]
 
           before_validation do |obj|
